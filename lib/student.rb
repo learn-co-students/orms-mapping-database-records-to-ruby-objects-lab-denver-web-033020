@@ -1,4 +1,5 @@
 #require 'pry'
+require 'pp'
 class Student
   attr_accessor :id, :name, :grade
 
@@ -37,10 +38,11 @@ class Student
       LIMIT 1
     SQL
 
-    DB[:conn].execute(sql, name).map do |row|
+    result = DB[:conn].execute(sql, name).map do |row|
       self.new_from_db(row)
-    end.first 
-    #why doesn't this return the id? wouldn't name be the second thing in the array?
+    end.first
+    # .first is need to return the first object in the array, 
+    # otherwise we get an array returned with the one object inside of it
   end
   
   def save
